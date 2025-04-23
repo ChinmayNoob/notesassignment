@@ -1,22 +1,22 @@
 "use client";
 
 import * as z from "zod";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { LoginSchema } from "@/schemas";
 import { CardWrapper } from "./card-wrapper";
 import { Button } from "./ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
-import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { login } from "@/app/api/login/actions";
+import { FormError } from "./form-error";
+import { FormSuccess } from "./form-success";
 
 export const LoginForm = () => {
-
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
-
-
     const [isPending, startTransition] = useTransition();
 
     const form = useForm<z.infer<typeof LoginSchema>>({
@@ -32,7 +32,20 @@ export const LoginForm = () => {
         setSuccess("");
 
         startTransition(() => {
-            console.log(values, error, success);
+            const formData = new FormData();
+            formData.append("email", values.email);
+            formData.append("password", values.password);
+            
+            login(formData).then((result) => {
+                if (result?.type === "INVALID_CREDENTIALS") {
+                    setError(result.message);
+                } else if (result?.type === "EMAIL_NOT_VERIFIED") {
+                    setError(result.message);
+                    // You could handle email verification resend here
+                } else if (result?.type === "OTHER") {
+                    setError(result.message);
+                }
+            });
         });
     }
 
@@ -56,6 +69,7 @@ export const LoginForm = () => {
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
                                         <Input {...field}
+                                            disabled={isPending}
                                             placeholder="kdot@example.com"
                                             type="email" />
                                     </FormControl>
@@ -70,13 +84,16 @@ export const LoginForm = () => {
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
                                         <Input {...field}
-                                            placeholder="Password must be of minimum 8 digits"
+                                            disabled={isPending}
+                                            placeholder="Password"
                                             type="password" />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )} />
                     </div>
+                    <FormError message={error} / >
+                    <FormSuccess message={success} / >
                     <Button
                         disabled={isPending}
                         type="submit"
@@ -84,7 +101,6 @@ export const LoginForm = () => {
                         Login
                     </Button>
                 </form>
-
             </Form>
         </CardWrapper>
     )
