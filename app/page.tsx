@@ -1,4 +1,4 @@
-import { UserAccount } from "@/components/user-account";
+import Dashboard from "@/components/dashboard";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -12,9 +12,6 @@ export default async function Home() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto py-12">
-      <UserAccount user={user} />
-    </div>
-
+    <Dashboard/>
   );
 }

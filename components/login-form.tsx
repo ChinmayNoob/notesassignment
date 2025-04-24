@@ -35,7 +35,7 @@ export const LoginForm = () => {
             const formData = new FormData();
             formData.append("email", values.email);
             formData.append("password", values.password);
-            
+
             login(formData).then((result) => {
                 if (result?.type === "INVALID_CREDENTIALS") {
                     setError(result.message);
@@ -92,8 +92,8 @@ export const LoginForm = () => {
                                 </FormItem>
                             )} />
                     </div>
-                    <FormError message={error} / >
-                    <FormSuccess message={success} / >
+                    <FormError message={error} />
+                    <FormSuccess message={success} />
                     <Button
                         disabled={isPending}
                         type="submit"
