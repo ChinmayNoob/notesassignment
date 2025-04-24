@@ -1,4 +1,4 @@
-// /app/api/notes/route.ts
+// /app/api/notes/route.ts 
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -15,7 +15,6 @@ export async function GET(request: NextRequest) {
       data: { user },
       error: authError,
     } = await supabase.auth.getUser();
-    
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -63,7 +62,6 @@ export async function PUT(request: NextRequest) {
       data: { user },
       error: authError,
     } = await supabase.auth.getUser();
-    
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -120,7 +118,6 @@ export async function POST(request: NextRequest) {
       data: { user },
       error: authError,
     } = await supabase.auth.getUser();
-    
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -134,19 +131,19 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
+    console.log(user);
     // Create a new note
     const { data, error } = await supabase
       .from("library")
       .insert({
         notes,
-        title: title || "Untitled Note",
+        title,
         email: user.email,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
+        // created_at: new Date().toISOString(),
+        // updated_at: new Date().toISOString(),
       })
       .select();
-
+    console.log(data);
     if (error) {
       console.error("Error creating note:", error);
       return NextResponse.json(
@@ -181,7 +178,6 @@ export async function DELETE(request: NextRequest) {
       data: { user },
       error: authError,
     } = await supabase.auth.getUser();
-    
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

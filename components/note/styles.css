@@ -1,0 +1,180 @@
+/* Basic editor styles */
+.tiptap {
+  min-height: 300px;
+  outline: none;
+  color: #f2f2f2;
+}
+
+.tiptap:focus {
+  outline: none;
+}
+
+.tiptap :first-child {
+  margin-top: 0;
+}
+
+/* List styles */
+.tiptap ul, 
+.tiptap ol {
+  padding: 0 1.2rem;
+  margin: 1.25rem 0;
+}
+
+.tiptap li p {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+/* Heading styles */
+.tiptap h1, 
+.tiptap h2, 
+.tiptap h3, 
+.tiptap h4, 
+.tiptap h5, 
+.tiptap h6 {
+  line-height: 1.2;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.tiptap h1 { 
+  font-size: 1.75rem; 
+}
+
+.tiptap h2 { 
+  font-size: 1.5rem; 
+}
+
+.tiptap h3 { 
+  font-size: 1.25rem; 
+}
+
+.tiptap h4, 
+.tiptap h5, 
+.tiptap h6 { 
+  font-size: 1rem; 
+}
+
+/* Code and preformatted text styles */
+.tiptap code {
+  background-color: #282c34;
+  border-radius: 0.25rem;
+  color: #f8f8f2;
+  font-size: 0.85rem;
+  font-family: "JetBrains Mono", monospace;
+  padding: 0.15em 0.3em;
+}
+
+.tiptap pre {
+  background: #1a1a1a;
+  border-radius: 0.4rem;
+  color: #f8f8f2;
+  font-family: "JetBrains Mono", monospace;
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+}
+
+.tiptap pre code {
+  background: none;
+  color: inherit;
+  font-size: 0.85rem;
+  padding: 0;
+}
+
+.tiptap blockquote {
+  border-left: 3px solid #3f3f46;
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  color: #d4d4d8;
+}
+
+.tiptap hr {
+  border: none;
+  border-top: 1px solid #3f3f46;
+  margin: 1.5rem 0;
+}
+
+.tiptap p {
+  margin: 0.75rem 0;
+}
+
+.tiptap a {
+  color: #3b82f6;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.tiptap a:hover {
+  color: #60a5fa;
+}
+
+.tiptap img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.25rem;
+}
+
+/* Menu item styles */
+.menu-item {
+  color: #d4d4d8;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.menu-item:hover {
+  background-color: #27272a;
+}
+
+.menu-item.active {
+  background-color: #3f3f46;
+  color: #ffffff;
+}
+
+.menu-item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.menu-item.save-button {
+  color: #22c55e;
+}
+
+.menu-item.save-button:hover {
+  background-color: rgba(34, 197, 94, 0.1);
+}
+
+/* Editor container */
+.editor-container {
+  scrollbar-width: thin;
+  scrollbar-color: #52525b #18181b;
+}
+
+.editor-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.editor-container::-webkit-scrollbar-track {
+  background: #18181b;
+}
+
+.editor-container::-webkit-scrollbar-thumb {
+  background-color: #52525b;
+  border-radius: 20px;
+}
+
+/* Prose overrides for dark theme */
+.prose-invert {
+  --tw-prose-body: #d4d4d8;
+  --tw-prose-headings: #ffffff;
+  --tw-prose-links: #60a5fa;
+  --tw-prose-bold: #ffffff;
+  --tw-prose-counters: #a1a1aa;
+  --tw-prose-bullets: #a1a1aa;
+  --tw-prose-quotes: #e4e4e7;
+  --tw-prose-code: #f8f8f2;
+  --tw-prose-hr: #52525b;
+  --tw-prose-th-borders: #52525b;
+  --tw-prose-td-borders: #3f3f46;
+}
