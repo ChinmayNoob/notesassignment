@@ -1,6 +1,6 @@
 'use client'
 
-import { logout } from "@/app/api/logout/actions"
+import { logout } from "@/app/api/auth/actions"
 import { Button } from "./ui/button"
 import { useState } from "react"
 

@@ -10,9 +10,9 @@ import { CardWrapper } from "./card-wrapper";
 import { RegisterSchema } from "@/schemas";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { signup } from "@/app/api/login/actions";
 import { FormError } from "./form-error";
 import { FormSuccess } from "./form-success";
+import { signup } from "@/app/api/auth/actions";
 
 export const RegisterForm = () => {
     const [error, setError] = useState<string | undefined>("");

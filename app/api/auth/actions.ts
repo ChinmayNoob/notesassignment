@@ -72,7 +72,7 @@ export async function loginWithGoogle(): Promise<AuthError | undefined> {
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-            redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/callback`,
+            redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
         },
     })
 
@@ -89,6 +89,7 @@ export async function loginWithGoogle(): Promise<AuthError | undefined> {
     // Redirect user to Google OAuth consent screen
     redirect(data.url)
 }
+
 
 export async function signup(formData: FormData) {
     const supabase = await createClient()
@@ -122,4 +123,13 @@ export async function resendVerificationEmail(email: string): Promise<{ error?: 
     }
 
     return {}
+}
+
+
+export async function logout() {
+    const supabase = await createClient()
+    await supabase.auth.signOut()
+
+    revalidatePath('/', 'layout')
+    redirect('/login')
 }

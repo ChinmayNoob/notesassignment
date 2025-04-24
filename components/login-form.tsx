@@ -10,9 +10,9 @@ import { CardWrapper } from "./card-wrapper";
 import { Button } from "./ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
-import { login } from "@/app/api/login/actions";
 import { FormError } from "./form-error";
 import { FormSuccess } from "./form-success";
+import { login } from "@/app/api/auth/actions";
 
 export const LoginForm = () => {
     const [error, setError] = useState<string | undefined>("");

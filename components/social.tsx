@@ -3,7 +3,7 @@
 import { FcGoogle } from "react-icons/fc";
 import { Button } from "./ui/button";
 import { useState, useTransition } from "react";
-import { loginWithGoogle } from "@/app/api/login/actions";
+import { loginWithGoogle } from "@/app/api/auth/actions";
 
 
 export const Social = () => {
