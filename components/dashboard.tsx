@@ -1,13 +1,13 @@
 'use client'
 import { useDeleteNote, useNotes } from '@/lib/hooks/use-notes'
 import { useUser } from '@/lib/hooks/user'
-import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import LoadingScreen from './loading-screen'
 import { Button } from './ui/button'
 import { FileText, LogOut, Plus, Trash2 } from 'lucide-react'
 import Link from 'next/link'
+import { logout } from '@/app/api/auth/actions'
 
 
 const stripHtmlTags = (html: string) => {
@@ -17,7 +17,6 @@ const stripHtmlTags = (html: string) => {
 const Dashboard = () => {
   const { data: notes = [], isLoading } = useNotes()
   const router = useRouter()
-  const supabase = createClient()
   const deleteNote = useDeleteNote()
   const { data: user } = useUser()
 
@@ -25,8 +24,7 @@ const Dashboard = () => {
 
   const handleSignOut = async () => {
     try {
-      await supabase.auth.signOut()
-      router.push('/login')
+      await logout();
     } catch (error) {
       console.error('Error signing out:', error)
     }
@@ -47,7 +45,7 @@ const Dashboard = () => {
   }
 
   const handleCreateNote = () => {
-    router.push('/note/new')
+    router.push('/note')
   }
 
   if (isLoading) {
