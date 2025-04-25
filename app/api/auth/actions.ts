@@ -65,14 +65,17 @@ export async function login(formData: FormData): Promise<AuthError | undefined> 
 
 export async function loginWithGoogle(): Promise<AuthError | undefined> {
     const supabase = await createClient()
-
-    // Debug log
-    console.log('NEXT_PUBLIC_SITE_URL (loginWithGoogle):', process.env.NEXT_PUBLIC_SITE_URL)
-
+    
+    const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL 
+        ? `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`
+        : `${process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : ''}/auth/callback`
+    
+    console.log('Using redirect URL:', redirectUrl)
+    
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-            redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+            redirectTo: redirectUrl,
         },
     })
 
@@ -83,13 +86,9 @@ export async function loginWithGoogle(): Promise<AuthError | undefined> {
         }
     }
 
-    // Debug log
     console.log('Google OAuth redirect URL:', data?.url)
-
-    // Redirect user to Google OAuth consent screen
     redirect(data.url)
 }
-
 
 export async function signup(formData: FormData) {
     const supabase = await createClient()
