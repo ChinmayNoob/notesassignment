@@ -3,6 +3,8 @@
 import "./styles.css";
 
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
+import Placeholder from '@tiptap/extension-placeholder';
+
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import {
@@ -165,16 +167,15 @@ const MenuBar = ({ editor, saveNotesFunc, saving }: MenuBarProps) => {
     <div className="flex flex-row flex-wrap gap-1 pb-1 overflow-x-auto scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-900">
       {menuButtons.map((button, index) => {
         const Icon = button.icon;
-        
+
         return (
           <Button
             key={index}
             variant="ghost"
             size="icon"
             onClick={() => button.action(editor)}
-            className={`menu-item ${
-              button.isActive?.(editor) ? "active" : ""
-            }`}
+            className={`menu-item ${button.isActive?.(editor) ? "active" : ""
+              }`}
             disabled={saving}
             title={button.title}
           >
@@ -182,7 +183,7 @@ const MenuBar = ({ editor, saveNotesFunc, saving }: MenuBarProps) => {
           </Button>
         );
       })}
-      
+
       <Button
         variant="ghost"
         size="icon"
@@ -225,11 +226,11 @@ export default function Note({
         inline: true,
         allowBase64: false,
       }),
+      Placeholder.configure({
+        placeholder: 'Start taking notes! Use the toolbar above to format your notes.',
+      }),
     ],
-    content:
-      serverNotes ||
-      `<h2>Start taking notes!</h2>
-    <p>Use the toolbar above to format your notes.</p>`,
+    content: '', // no default content
     onUpdate({ editor }) {
       setNotes(editor.getHTML());
     },
@@ -253,7 +254,7 @@ export default function Note({
         },
         {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          onSuccess: (data) => {},
+          onSuccess: (data) => { },
         }
       );
     } else {
@@ -275,18 +276,18 @@ export default function Note({
   return (
     <div className="w-full h-full max-w-4xl mx-auto flex flex-col">
       <header className="flex items-center mb-4 pt-4">
-        <Link 
-          href="/" 
+        <Link
+          href="/"
           className="flex items-center text-zinc-400 hover:text-white mr-4 transition-colors"
         >
           <ChevronLeft size={16} className="mr-1" />
           <span className="text-sm">Back</span>
         </Link>
-        
+
         <h1 className="text-xl font-medium text-zinc-200">
           {uuid ? "Edit Note" : "New Note"}
         </h1>
-        
+
         <Button
           onClick={saveNotes}
           disabled={isSaving}
@@ -306,18 +307,18 @@ export default function Note({
             placeholder="Enter note title..."
             className="text-2xl w-full bg-transparent border-none text-zinc-100 font-medium pb-2 focus:outline-none focus:border-b-2 focus:border-zinc-700 transition-colors"
           />
-          
+
           <MenuBar
             editor={editor}
             saveNotesFunc={saveNotes}
             saving={isSaving}
           />
         </div>
-        
+
         <div className="editor-container flex-1 px-4 pb-4 overflow-y-auto">
-          <EditorContent 
-            editor={editor} 
-            className="prose prose-invert prose-zinc h-full focus:outline-none text-zinc-200" 
+          <EditorContent
+            editor={editor}
+            className="prose prose-invert prose-zinc h-full focus:outline-none text-zinc-200"
           />
         </div>
       </div>

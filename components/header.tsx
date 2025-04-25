@@ -21,7 +21,7 @@ export const Header = ({ label }: HeaderProps) => {
                 font.className,
             )}>
                 <FaRegNoteSticky />
-                Notes App
+                Crollo
             </h1>
             <p className="text-muted-foreground text-sm">
                 {label}

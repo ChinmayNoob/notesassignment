@@ -5,8 +5,10 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import LoadingScreen from './loading-screen'
 import { Button } from './ui/button'
-import { FileText, LogOut, Plus, Trash2 } from 'lucide-react'
+import { LogOut, Plus, Trash2 } from 'lucide-react'
 import Link from 'next/link'
+import { BsStars } from "react-icons/bs";
+
 import { logout } from '@/app/api/auth/actions'
 
 
@@ -133,26 +135,27 @@ const Dashboard = () => {
                     </div>
 
                     {/* Action buttons */}
-                    <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 bg-zinc-900/80 backdrop-blur-sm rounded-full p-1">
+                    <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2 bg-zinc-900/80 backdrop-blur-sm rounded-full p-1">
                       <Button
                         variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-700"
+                        className="flex items-center gap-1 text-sm text-zinc-400 hover:text-green-400 hover:bg-zinc-700 px-3 py-1 rounded-full"
                         onClick={(e) => handleSummary(note.uuid, e)}
                         title="Summarize"
                       >
-                        <FileText className="h-3.5 w-3.5" />
+                        <BsStars className="h-4 w-4" />
+                        Summary
                       </Button>
                       <Button
                         variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 rounded-full text-zinc-400 hover:text-red-400 hover:bg-zinc-700"
+                        className="flex items-center gap-1 text-sm text-zinc-400 hover:text-red-400 hover:bg-zinc-700 px-3 py-1 rounded-full"
                         onClick={(e) => handleDelete(note.uuid, e)}
                         title="Delete"
                       >
-                        <Trash2 className="h-3.5 w-3.5" />
+                        <Trash2 className="h-4 w-4" />
+                        Delete
                       </Button>
                     </div>
+
                   </div>
                 </Link>
               ))}
