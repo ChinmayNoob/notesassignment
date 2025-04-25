@@ -1,15 +1,12 @@
-import { createClient } from '@/lib/supabase/server'
-import { NextResponse } from 'next/server'
+import { createClient } from "@/lib/supabase/server"
+import { NextResponse } from "next/server"
 
 export async function GET(request: Request) {
   // Debug logs for callback
   console.log('--- /auth/callback ---')
   console.log('request.url:', request.url)
-  const { searchParams, origin } = new URL(request.url)
-  console.log('origin:', origin)
-  const forwardedHost = request.headers.get('x-forwarded-host')
-  console.log('x-forwarded-host:', forwardedHost)
-  console.log('NODE_ENV:', process.env.NODE_ENV)
+  
+  const { searchParams } = new URL(request.url)
   const code = searchParams.get('code')
   const next = searchParams.get('next') ?? '/'
 
@@ -18,16 +15,14 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (!error) {
-      const isLocalEnv = process.env.NODE_ENV === 'development'
-      if (isLocalEnv) {
-        return NextResponse.redirect(`${origin}${next}`)
-      } else if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${next}`)
-      } else {
-        return NextResponse.redirect(`${origin}${next}`)
-      }
+      // Always redirect to the appropriate base URL
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+                     (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '')
+      
+      console.log('Redirecting to:', `${baseUrl}${next}`)
+      return NextResponse.redirect(`${baseUrl}${next}`)
     }
   }
 
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`)
+  return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL || ''}/auth/auth-code-error`)
 }
